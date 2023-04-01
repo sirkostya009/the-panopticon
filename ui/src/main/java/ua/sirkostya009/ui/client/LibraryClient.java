@@ -10,6 +10,8 @@ import ua.sirkostya009.ui.model.Book;
 import ua.sirkostya009.ui.model.BookWithPages;
 import org.springframework.data.domain.Page;
 
+import java.util.Map;
+
 @FeignClient(name = "library", url = "${backend.urls.library-client}")
 public interface LibraryClient {
     @GetMapping("/")
@@ -17,9 +19,9 @@ public interface LibraryClient {
                    @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/{id}")
-    Object id(@PathVariable String id,
-              @RequestParam(value = "page", required = false) int page,
-              @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+    Map<String, Object> id(@PathVariable String id,
+                           @RequestParam(value = "page", required = false) int page,
+                           @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/buy/{id}")
     void buy(@PathVariable String id,
