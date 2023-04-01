@@ -7,10 +7,15 @@
 
 <div th:replace="~{header :: header}"></div>
 
-<main role="main" class="container sticky-footer">
+<main role="main" class="container">
   <div th:if="${books == null}">
     <h3 class="display-4">No content to display</h3>
-    <h4><span th:href="@{/login}">Login</span> to gain see things.</h4>
+    <div th:if="${user == null}">
+      <h4><span th:href="@{/login}">Login</span> to gain see things.</h4>
+    </div>
+    <div th:if="${user != null}">
+      <h4>Perhaps you would like to take a look at the catalog?</h4>
+    </div>
   </div>
   <div th:if="${books != null}">
     <div class="container">
