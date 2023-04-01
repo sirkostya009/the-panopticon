@@ -1,6 +1,8 @@
 package ua.sirkostya009.ui.controller;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.ui.Model;
+import ua.sirkostya009.ui.model.User;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -25,6 +27,18 @@ public class ModelUtils {
             defaults.putAll(override);
 
         return defaults;
+    }
+
+    public static void decorate(Model model, String title, User user) {
+        // this model building shit will get really out of hand as the project scales
+        model.addAllAttributes(defaults(
+                user != null
+                        ? Map.of(
+                        "title", title,
+                        "user", user
+                        )
+                        : Map.of("title", title)
+        ));
     }
 
 }
