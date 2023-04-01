@@ -1,0 +1,61 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gayway
+  config:
+    import: optional:consul:/
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /health
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: library
+          uri: lb://library
+          predicates:
+            - Path=/library/**
+          filters:
+            - RewritePath=/library/(?<segment>.*), /api/books/$\{segment}
+            - CircuitBreaker=library
+        - id: auth-server
+          uri: lb://auth-server
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<segment>.*), /api/auth/$\{segment}
+            - CircuitBreaker=auth
+        - id: user
+          uri: lb://auth-server
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<segment>.*), /api/users/$\{segment}
+            - CircuitBreaker=users
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      services:
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 60
+        slow-call-duration-threshold:
+          - 2s
+        minimum-number-of-calls: 3
+        permitted-number-of-calls-in-half-open-state: 1
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
