@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{head :: head}"></div>
+
+<body>
+
+<div th:replace="~{header :: header}"></div>
+
+<main class="container py-5">
+  <div style="max-width: 400px; margin: auto;">
+    <form action="/login" method="post" class="border rounded p-4">
+      <div th:if="${error != null}">
+        <div class="alert alert-danger" th:text="${error}"></div>
+      </div>
+      <div class="mb-3">
+        <label for="login" class="form-label">Login:</label>
+        <input type="text" id="login" name="login" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" id="password" name="password" class="form-control">
+      </div>
+      <div class="mb-3">
+        <button type="submit" name="action" value="Continue" class="btn btn-primary">Continue</button>
+        <button type="button" onclick="window.history.back()" class="btn btn-secondary">Cancel</button>
+        <a href="/register" class="btn btn-link">Register</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<div th:replace="~{footer :: footer}"></div>
+
+</body>
+
+</html>
