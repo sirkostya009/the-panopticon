@@ -11,6 +11,8 @@ import ua.sirkostya009.library.dto.PageDto;
 import ua.sirkostya009.library.dto.PagesDto;
 import ua.sirkostya009.library.service.BookService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/books/")
@@ -56,5 +58,11 @@ public class BookController {
     @PreAuthorize("hasAuthority('SCOPE_ADD_BOOKS')")
     public BookDto add(@RequestBody @Valid PagesDto dto) {
         return BookDto.of(service.add(dto));
+    }
+
+    @PostMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_GIVE_BOOKS')")
+    public void addBookTo(@PathVariable String id, @RequestBody List<String> ids) {
+        ids.forEach(uid -> service.buyBook(id, uid));
     }
 }

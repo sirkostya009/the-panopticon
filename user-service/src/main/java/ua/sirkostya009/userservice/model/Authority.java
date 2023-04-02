@@ -10,6 +10,7 @@ public enum Authority implements GrantedAuthority {
     VIEW_BOOKS,
     ADD_BOOKS,
     REMOVE_BOOKS,
+    GIVE_BOOKS,
     MODIFY_BOOKS,
     ADD_USERS,
     DISABLE_USERS;
