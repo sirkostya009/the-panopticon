@@ -1,0 +1,62 @@
+<!--/*@thymesVar id="book" type="ua.sirkostya009.ui.model.BookWithPage"*/-->
+<div th:fragment="book-page" class="card mb-3">
+  <div class="card-header">
+    <h5 th:text="${book.title}">Book Title</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <p><strong>Authors:</strong></p>
+        <ul>
+          <li th:each="author : ${book.authors}" th:text="${author}"></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Genres:</strong></p>
+        <ul>
+          <li th:each="genre : ${book.genres}" th:text="${genre}"></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Page:</strong> <span th:text="${book.pageNo}">1</span> / <span th:text="${book.pagesCount}">1</span></p>
+        <p><strong>Words:</strong> <span th:text="${book.wordsCount}">0</span></p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h6>Page content</h6>
+          </div>
+          <div class="card-body" style="height: 300px; overflow-y: scroll;">
+            <div th:text="${book.pageContent}">No content</div>
+          </div>
+          <div class="card-footer">
+            <div class="col-md-12">
+              <div class="text-center">
+                <ul class="pagination">
+                  <li class="page-item" th:class="${book.pageNo == 1} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/book/{id}/{page}(id=${book.id}, page=1)}">First</a>
+                  </li>
+                  <li class="page-item" th:class="${book.pageNo == 1} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/book/{id}/{page}(id=${book.id}, page=${book.pageNo - 1})}">Previous</a>
+                  </li>
+                  <li class="page-item" th:class="${i == book.pageNo} ? 'active' : ''" th:each="i : ${#numbers.sequence(1, book.pagesCount)}" th:if="${i == 1 || i == book.pageNo || i == book.pageNo - 1 || i == book.pageNo + 1 || i == book.pagesCount}">
+                    <a class="page-link" th:href="@{/book/{id}/{page}(id=${book.id}, page=${i})}" th:text="${i}">1</a>
+                  </li>
+                  <li class="page-item" th:class="${book.pageNo == book.pagesCount} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/book/{id}/{page}(id=${book.id}, page=${book.pageNo + 1})}">Next</a>
+                  </li>
+                  <li class="page-item" th:class="${book.pageNo == book.pagesCount} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/book/{id}/{page}(id=${book.id}, page=${book.pagesCount})}">Last</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

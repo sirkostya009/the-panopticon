@@ -6,16 +6,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.sirkostya009.library.dto.PagesDto;
 import ua.sirkostya009.library.exception.ForbiddenException;
-import ua.sirkostya009.library.model.Book;
 import ua.sirkostya009.library.exception.NotFoundException;
+import ua.sirkostya009.library.model.Book;
 import ua.sirkostya009.library.repository.BookRepository;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +28,6 @@ public class BookServiceImpl implements BookService {
     public Book findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book with id " + id + " not found"));
-    }
-
-    @Override
-    public String findBookPage(String id, int page) {
-        return repository.findSinglePage(id, page)
-                .orElseThrow(() -> new NotFoundException("page or book not found"));
     }
 
     @Override

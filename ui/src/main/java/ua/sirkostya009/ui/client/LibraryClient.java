@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.sirkostya009.ui.model.Book;
-import ua.sirkostya009.ui.model.BookWithPages;
+import ua.sirkostya009.ui.model.BookWithPage;
 import org.springframework.data.domain.Page;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ public interface LibraryClient {
 
     @GetMapping("/{id}")
     Map<String, Object> id(@PathVariable String id,
-                           @RequestParam(value = "page", required = false) int page,
+                           @RequestParam(value = "page", required = false) Integer page,
                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/buy/{id}")
@@ -32,6 +32,6 @@ public interface LibraryClient {
                       @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/download/{id}")
-    BookWithPages download(@PathVariable String id,
-                           @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+    BookWithPage download(@PathVariable String id,
+                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/head :: head}"></div>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main role="main" class="container sticky-footer">
+
+  <div th:if="${book != null}">
+    <div th:replace="~{fragments/book-details :: book-details}"></div>
+  </div>
+
+  <div th:if="${page != null}">
+    <div th:replace="~{fragments/book-page :: book-page(book=${page})}"></div>
+  </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

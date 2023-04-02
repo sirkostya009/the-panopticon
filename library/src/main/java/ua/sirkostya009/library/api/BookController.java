@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.sirkostya009.library.annotation.UserId;
 import ua.sirkostya009.library.dto.BookDto;
+import ua.sirkostya009.library.dto.PageDto;
 import ua.sirkostya009.library.dto.PagesDto;
 import ua.sirkostya009.library.service.BookService;
 
@@ -26,9 +27,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('SCOPE_VIEW_BOOKS')")
     public Object id(@PathVariable String id,
                      @RequestParam(value = "page", required = false) Integer page) {
-        return page == null
-                ? BookDto.of(service.findById(id))
-                : service.findBookPage(id, page);
+        var book = service.findById(id);
+        return page == null ? BookDto.of(book) : PageDto.of(book, page);
     }
 
     @GetMapping("/buy/{id}")

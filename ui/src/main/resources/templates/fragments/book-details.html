@@ -1,0 +1,43 @@
+<!--/*@thymesVar id="book" type="ua.sirkostya009.ui.model.BookWithPage"*/-->
+<div th:fragment="book-details" class="card mb-3">
+  <div class="card-header">
+    <h5 th:text="${book.title}">Book Title</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <p><strong>Authors:</strong></p>
+        <ul>
+          <li th:each="author : ${book.authors}" th:text="${author}"></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Genres:</strong></p>
+        <ul>
+          <li th:each="genre : ${book.genres}" th:text="${genre}"></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Pages:<span th:text="${book.pagesCount}">0</span></strong></p>
+        <p><strong>Words:</strong> <span th:text="${book.wordsCount}">0</span></p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h6>Page content</h6>
+          </div>
+          <div class="card-footer">
+            <div class="col-md-12">
+              <div class="text-center">
+                <a class="btn btn-primary" th:href="@{/book/{id}/{pageNo}(id=${book.id}, pageNo=1)}">Read</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
