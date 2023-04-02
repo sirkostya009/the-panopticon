@@ -1,3 +1,4 @@
+<!--/*@thymesVar id="user" type="ua.sirkostya009.ui.model.User"*/-->
 <header th:fragment="header" class="bg-light py-3 shadow sticky-top">
   <nav class="container">
     <ul class="nav">
@@ -7,13 +8,13 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/catalog}">Catalog</a>
       </li>
-      <li class="nav-item" th:if="${session.user != null}">
+      <li class="nav-item" th:if="${user != null}">
         <a class="nav-link" th:href="@{/self}" th:text="${user.username}"></a>
       </li>
-      <li class="nav-item" th:if="${session.user == null}">
+      <li class="nav-item" th:if="${user == null}">
         <a class="nav-link" th:href="@{/login}">Connect User</a>
       </li>
-      <li class="nav-item" th:if="${session.user == null}">
+      <li class="nav-item" th:if="${user == null}">
         <a class="nav-link" th:href="@{/register}">Register</a>
       </li>
     </ul>

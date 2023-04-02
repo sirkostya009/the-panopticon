@@ -7,15 +7,16 @@
 
 <div th:replace="~{fragments/header :: header}"></div>
 
+<!--/*@thymesVar id="user" type="ua.sirkostya009.ui.model.User"*/-->
 <main role="main" class="container">
   <div th:if="${books == null}">
     <h3 class="display-4">No content to display</h3>
-      <div th:if="${session.user == null}">
-        <h4 th:if="${session.user == null}">Log in to see books in possession.</h4>
+      <div th:if="${user == null}">
+        <h4 th:if="${user == null}">Log in to see books in possession.</h4>
         <a class="btn btn-primary" href="/login">Login</a>
       </div>
-      <div th:if="${session.user != null}">
-        <h4 th:if="${session.user != null}">Perhaps you would like to take a look at the catalog?</h4>
+      <div th:if="${user != null}">
+        <h4 th:if="${user != null}">Perhaps you would like to take a look at the catalog?</h4>
         <a class="btn btn-primary" href="/catalog">Catalog</a>
       </div>
   </div>
