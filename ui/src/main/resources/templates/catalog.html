@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/head :: head(title='Catalog')}"></div>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main role="main" class="container sticky-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <span></span>
+        <h2>Catalog</h2>
+        <span></span>
+        <div th:each="book : ${books}" class="card mb-3">
+          <div th:replace="~{fragments/book-card :: book-card(book=${book})}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

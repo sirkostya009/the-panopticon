@@ -1,15 +1,18 @@
 package ua.sirkostya009.ui.controller;
 
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.sirkostya009.ui.client.AuthClient;
 import ua.sirkostya009.ui.client.UserClient;
 import ua.sirkostya009.ui.model.LoginRequest;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/login")
@@ -20,9 +23,7 @@ public class LoginController {
     private final UserClient userClient;
 
     @GetMapping
-    public String login(Model model) {
-        ModelUtils.decorate(model, "Login", null);
-
+    public String login() {
         return "login";
     }
 
@@ -39,6 +40,8 @@ public class LoginController {
         String jwt;
         try {
             jwt = "Bearer " + authClient.authenticate(new LoginRequest(login, password));
+        } catch (FeignException.Unauthorized e) {
+            throw new IllegalArgumentException("Login or password is incorrect");
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to authenticate", e);
         }
@@ -53,10 +56,10 @@ public class LoginController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleException(IllegalArgumentException e, Model model) {
-        ModelUtils.decorate(model, "Login", null);
-        model.addAllAttributes(ModelUtils.defaults(Map.of(
-                "error", e.getCause() != null ? e.getMessage() + "\nCause: " + e.getCause().getMessage() : e.getMessage()
-        )));
+        model.addAttribute(
+                "error",
+                e.getCause() != null ? e.getMessage() + "\nCause: " + e.getCause().getMessage() : e.getMessage())
+        ;
 
         return "login";
     }

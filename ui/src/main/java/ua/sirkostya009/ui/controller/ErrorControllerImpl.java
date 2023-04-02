@@ -7,15 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.Map;
-
 @Controller
 @SessionAttributes("user")
 public class ErrorControllerImpl implements ErrorController {
 
     @GetMapping("/error")
     public String error(Model model, HttpServletResponse response) {
-        model.addAllAttributes(ModelUtils.defaults(Map.of("title", response.getStatus())));
+        model.addAttribute("title", response.getStatus());
 
         return "error/" + switch (response.getStatus()) {
             case 404 -> "404";

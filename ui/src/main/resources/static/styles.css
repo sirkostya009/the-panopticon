@@ -1,0 +1,14 @@
+.gradient-btn {
+    background: linear-gradient(to right, #64b5f6, #2196f3);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.gradient-btn:hover {
+    background: linear-gradient(to right, #2196f3, #64b5f6);
+    transition: background-color 0.3s ease;
+}
