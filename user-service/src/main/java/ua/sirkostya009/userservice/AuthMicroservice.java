@@ -5,13 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.sirkostya009.userservice.model.Role;
+import ua.sirkostya009.userservice.model.Authority;
 import ua.sirkostya009.userservice.model.User;
 import ua.sirkostya009.userservice.repository.UserRepository;
-
-import java.util.Collections;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -32,7 +29,7 @@ public class AuthMicroservice {
 					.password(encoder.encode("password"))
 					.firstName("admin")
 					.isEnabled(true)
-					.roles(Collections.singleton(Role.SUPER_USER))
+					.authorities(Authority.Presets.SUPER_USER)
 					.build());
 		};
 	}

@@ -42,10 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                         "/auth/",
                                         "/library/"
                                 ))
-                                .claim("scp", user.getRoles()
-                                                            .stream()
-                                                            .flatMap(role -> role.getAuthorities().stream())
-                                                            .toList())
+                                .claim("scp", user.getAuthorities())
                                 .claim("uid", user.getId())
                                 .expiresAt(Instant.now().plus(7, ChronoUnit.DAYS))
                                 .build()

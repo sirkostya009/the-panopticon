@@ -10,14 +10,13 @@ import ua.sirkostya009.userservice.dto.MailJob;
 import ua.sirkostya009.userservice.dto.UserPasswordDto;
 import ua.sirkostya009.userservice.exception.AuthException;
 import ua.sirkostya009.userservice.exception.NotFoundException;
-import ua.sirkostya009.userservice.model.Role;
+import ua.sirkostya009.userservice.model.Authority;
 import ua.sirkostya009.userservice.model.Token;
 import ua.sirkostya009.userservice.model.User;
 import ua.sirkostya009.userservice.repository.TokenRepository;
 import ua.sirkostya009.userservice.repository.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +40,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .password(encoder.encode(request.password()))
                 .firstName(request.firstName())
                 .lastName(request.lastName())
-                .roles(Collections.singleton(Role.USER))
+                .authorities(Authority.Presets.USER)
                 .build());
 
         var token = tokenRepository.save(Token.builder()

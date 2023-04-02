@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.sirkostya009.userservice.dto.UserPasswordDto;
 import ua.sirkostya009.userservice.exception.NotFoundException;
-import ua.sirkostya009.userservice.model.Role;
+import ua.sirkostya009.userservice.model.Authority;
 import ua.sirkostya009.userservice.model.User;
 import ua.sirkostya009.userservice.repository.UserRepository;
-
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class UserServiceImpl implements UserService {
                 .password(encoder.encode(dto.password()))
                 .firstName(dto.firstName())
                 .lastName(dto.lastName())
-                .roles(Collections.singleton(Role.USER))
+                .authorities(Authority.Presets.USER)
                 .isEnabled(true)
                 .build());
     }

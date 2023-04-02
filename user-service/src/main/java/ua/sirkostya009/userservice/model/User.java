@@ -34,5 +34,5 @@ public class User {
     @Column(nullable = false)
     private String password;
     private boolean isEnabled;
-    private Set<Role> roles;
+    private Set<Authority> authorities;
 }
