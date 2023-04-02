@@ -12,10 +12,10 @@ import ua.sirkostya009.userservice.repository.UserRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class AuthMicroservice {
+public class UserMicroservice {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthMicroservice.class, args);
+		SpringApplication.run(UserMicroservice.class, args);
 	}
 
 	@Bean
