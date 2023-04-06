@@ -11,6 +11,7 @@ import ua.sirkostya009.library.model.Book;
 import ua.sirkostya009.library.repository.BookRepository;
 
 import java.util.Arrays;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +61,7 @@ public class BookServiceImpl implements BookService {
                         .wordsCount(dto.wordsCount() == null
                                     ? (int) dto.pages().stream().flatMap(string -> Arrays.stream(string.split(" "))).count()
                                     : dto.wordsCount())
+                        .boughtBy(Set.of())
                         .build());
     }
 

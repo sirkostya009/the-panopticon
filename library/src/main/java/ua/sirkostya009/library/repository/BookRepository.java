@@ -11,20 +11,14 @@ import java.util.Optional;
 public interface BookRepository extends ElasticsearchRepository<Book, String> {
     @Query("""
     {
-      "bool": {
-        "must": {
-          "match_all": {}
-        },
-        "filter": {
-          "nested": {
-            "path": "boughtBy",
-            "query": {
-              "match": {
-                "boughtBy": "?0"
-              }
-            }
+      "nested": {
+        "path": "boughtBy",
+        "query": {
+          "match": {
+            "boughtBy": "?0"
           }
-        }
+        },
+        "score_mode": "none"
       }
     }
     """)
@@ -59,15 +53,24 @@ public interface BookRepository extends ElasticsearchRepository<Book, String> {
     """)
     Optional<String> findSinglePage(String bookId, int pageIndex);
 
+    /**
+     * Adds a uid to boughtBy property. Make sure you have elasticsearch scripting enabled.
+     * @param bookId book's id to add a buyer to
+     * @param userId user id of the buyer
+     */
     @Query("""
     {
       "script": {
-        "source": "ctx._source.boughtBy.add(?1);"
+        "source": "if (ctx._source.boughtBy == null) { ctx._source.boughtBy = [buyer] } else { ctx._source.boughtBy.add(buyer) }",
+        "lang": "painless",
+        "params": {
+          "buyer": "?1"
+        }
       },
       "query": {
-        "term": {
+        "match": {
           "id": {
-            "value": "?0"
+            "query": "?0"
           }
         }
       }

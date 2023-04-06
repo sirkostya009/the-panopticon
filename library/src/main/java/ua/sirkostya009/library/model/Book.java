@@ -24,16 +24,16 @@ public class Book {
     private String id;
     @Field(type = FieldType.Search_As_You_Type)
     private String title;
-    @Field
+    @Field(type = FieldType.Keyword)
     private Set<String> authors;
-    @Field
+    @Field(type = FieldType.Keyword)
     private Set<String> genres;
-    @Field
+    @Field(type = FieldType.Text)
     private List<String> pages;
-    @Field
+    @Field(type = FieldType.Integer)
     private Integer pagesCount;
-    @Field
+    @Field(type = FieldType.Integer)
     private Integer wordsCount;
-    @Field
+    @Field(type = FieldType.Nested)
     private Set<String> boughtBy;
 }
