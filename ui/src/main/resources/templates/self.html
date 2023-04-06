@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="user" type="ua.sirkostya009.ui.model.User"*/-->
+<div th:replace="~{fragments/head :: head(title=${user.username})}"></div>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main class="container mt-3">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">User Information</h5>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Email:</strong> [[${user.email}]]</li>
+        <li class="list-group-item"><strong>Username:</strong> [[${user.username}]]</li>
+        <li class="list-group-item"><strong>First Name:</strong> [[${user.firstName}]]</li>
+        <li class="list-group-item"><strong>Last Name:</strong> [[${user.lastName}]]</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

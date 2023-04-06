@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import ua.sirkostya009.ui.client.LibraryClient;
+import ua.sirkostya009.ui.client.UserClient;
 
 @Slf4j
 @Controller
@@ -18,14 +19,15 @@ import ua.sirkostya009.ui.client.LibraryClient;
 @SessionAttributes("jwt")
 public class MainController {
 
-    private final LibraryClient client;
+    private final LibraryClient libraryClient;
+    private final UserClient userClient;
 
     @GetMapping
     public String home(@RequestParam(value = "page", defaultValue = "0") int page,
                        @SessionAttribute(value = "jwt", required = false) String jwt,
                        Model model) {
         try {
-            var books = client.bought(page, jwt);
+            var books = libraryClient.bought(page, jwt);
             model.addAttribute("books", books.getContent());
         } catch (Exception e) {
             log.error("Exception thrown in GET-home", e);
@@ -41,7 +43,7 @@ public class MainController {
         if (jwt == null)
             return "redirect:/login";
 
-        var books = client.get(page, jwt);
+        var books = libraryClient.get(page, jwt);
 
         model.addAttribute("books", books);
 
@@ -49,9 +51,12 @@ public class MainController {
     }
 
     @GetMapping("/self")
-    public String self(@SessionAttribute(value = "jwt", required = false) String jwt) {
+    public String self(@SessionAttribute(value = "jwt", required = false) String jwt,
+                       Model model) {
         if (jwt == null)
             return "redirect:/login";
+
+        model.addAttribute("user", userClient.self(jwt));
 
         return "self";
     }
