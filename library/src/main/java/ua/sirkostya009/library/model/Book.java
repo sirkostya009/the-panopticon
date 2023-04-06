@@ -24,7 +24,7 @@ public class Book {
     private String id;
     @Field(type = FieldType.Search_As_You_Type)
     private String title;
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Search_As_You_Type)
     private Set<String> authors;
     @Field(type = FieldType.Keyword)
     private Set<String> genres;
