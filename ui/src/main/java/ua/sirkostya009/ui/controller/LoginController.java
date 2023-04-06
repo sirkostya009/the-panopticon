@@ -3,6 +3,7 @@ package ua.sirkostya009.ui.controller;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,7 @@ import ua.sirkostya009.ui.client.AuthClient;
 import ua.sirkostya009.ui.client.UserClient;
 import ua.sirkostya009.ui.model.LoginRequest;
 
+@Slf4j
 @Controller
 @RequestMapping("/login")
 @RequiredArgsConstructor
@@ -43,6 +45,7 @@ public class LoginController {
         } catch (FeignException.Unauthorized e) {
             throw new IllegalArgumentException("Login or password is incorrect");
         } catch (Exception e) {
+            log.error("Arbitrary exception thrown during authentication", e);
             throw new IllegalArgumentException("Failed to authenticate", e);
         }
 
