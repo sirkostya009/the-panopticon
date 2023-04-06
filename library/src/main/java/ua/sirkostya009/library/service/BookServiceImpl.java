@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ua.sirkostya009.library.dto.BookDto;
+import ua.sirkostya009.library.dto.PageDto;
 import ua.sirkostya009.library.dto.PagesDto;
 import ua.sirkostya009.library.exception.ForbiddenException;
 import ua.sirkostya009.library.exception.NotFoundException;
@@ -29,6 +31,21 @@ public class BookServiceImpl implements BookService {
     public Book findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book with id " + id + " not found"));
+    }
+
+    @Override
+    public Object bookOrPage(String id, Integer page, String uid) {
+        var book = findById(id);
+
+        if (page != null) {
+            if (book.getBoughtBy().contains(uid)) {
+                return PageDto.of(book, page);
+            } else {
+                throw new ForbiddenException("Buy book to view");
+            }
+        }
+
+        return BookDto.of(book);
     }
 
     @Override

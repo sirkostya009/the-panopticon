@@ -9,6 +9,8 @@ public interface BookService {
 
     Book findById(String id);
 
+    Object bookOrPage(String id, Integer page, String uid);
+
     void buyBook(String bookId, String userId);
 
     Page<Book> findAllBoughtBy(String id, int page);
