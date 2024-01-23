@@ -1,9 +1,12 @@
-Prerequisites:
+# Panopticon (or Menagerie)
+
+This project allows users to register and view, buy and read books. The database used here is Elasticsearch.
+
+## Running
+### Prerequisites:
 * IntelliJ IDEA
 * JDK 17
 * Docker
-
-***
 
 First, clone this repo to any folder on your pc. Second, open the cloned repo in your IDEA and run the docker-compose
 file by either typing `docker-compose up` in your terminal or via IDEA's interface. Finally, run the main classes.
@@ -17,8 +20,7 @@ And that's it! If you want to test just the UI alone, you only need to go to `lo
 choice. If you're here to work with microservices, move on to the next section of this readme to find out how to
 authenticate!
 
-***
-
+### Usage
 To authenticate, just hit that `localhost:8000/auth/authenticate` url with a POST request with the following body:  
 ```json
 {
